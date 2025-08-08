@@ -1,3 +1,4 @@
+// Conteúdo CORRETO para o arquivo ColetorService.java
 package br.com.joinville.ecorota.service;
 
 import br.com.joinville.ecorota.model.Coletor;
@@ -17,22 +18,16 @@ public class ColetorService {
         this.coletorRepository = coletorRepository;
     }
 
-    /**
-     * Método responsável pela inclusão (cadastro) de um novo Coletor.
-     * @param coletor O objeto Coletor a ser salvo.
-     * @return O Coletor salvo com o ID gerado.
-     */
     public Coletor cadastrarColetor(Coletor coletor) {
-        System.out.println("Cadastrando novo coletor: " + coletor.getNome());
         return coletorRepository.save(coletor);
     }
 
-    /**
-     * Consulta e retorna todos os Coletores cadastrados.
-     * @return Uma lista de todos os Coletores.
-     */
     public List<Coletor> consultarTodosOsColetores() {
-        System.out.println("Consultando todos os coletores...");
         return coletorRepository.findAll();
+    }
+
+    public Coletor buscarPorId(Long id) {
+        return coletorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Erro: Coletor não encontrado para o ID: " + id));
     }
 }

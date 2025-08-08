@@ -12,7 +12,7 @@ public class RotaService {
 
     private final RotaRepository rotaRepository;
 
-    // Usando injeção de dependência via construtor (melhor prática)
+    // Injeção de dependência via construtor (melhor prática)
     @Autowired
     public RotaService(RotaRepository rotaRepository) {
         this.rotaRepository = rotaRepository;
@@ -24,7 +24,6 @@ public class RotaService {
      * @return A Rota salva com o ID gerado pelo banco de dados.
      */
     public Rota cadastrarRota(Rota rota) {
-        // Aqui poderiam entrar regras de negócio, como validar se a rota já existe.
         System.out.println("Cadastrando nova rota: " + rota.getNome());
         return rotaRepository.save(rota);
     }
@@ -36,5 +35,18 @@ public class RotaService {
     public List<Rota> consultarTodasAsRotas() {
         System.out.println("Consultando todas as rotas...");
         return rotaRepository.findAll();
+    }
+
+    /**
+     * MÉTODO ADICIONADO: Busca uma Rota específica pelo seu ID.
+     * Este método é essencial para que o ContratoService possa validar
+     * e buscar as rotas ao registrar um novo contrato.
+     * @param id O ID da rota a ser encontrada.
+     * @return O objeto Rota correspondente.
+     * @throws RuntimeException se a rota não for encontrada.
+     */
+    public Rota buscarPorId(Long id) {
+        return rotaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Erro: Rota não encontrada para o ID: " + id));
     }
 }
