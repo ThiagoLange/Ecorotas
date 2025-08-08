@@ -7,25 +7,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service // Anotação que define esta classe como um serviço (componente de negócio)
+@Service
 public class RotaService {
 
-    @Autowired // Injeção de dependência: O Spring vai fornecer uma instância de RotaRepository aqui
-    private RotaRepository rotaRepository;
+    private final RotaRepository rotaRepository;
 
-    public Rota criarRota(Rota rota) {
-        // Aqui podem entrar regras de negócio, como validar se já existe uma rota com o mesmo nome
+    // Usando injeção de dependência via construtor (melhor prática)
+    @Autowired
+    public RotaService(RotaRepository rotaRepository) {
+        this.rotaRepository = rotaRepository;
+    }
+
+    /**
+     * Método responsável pela inclusão (cadastro) de uma nova Rota.
+     * @param rota O objeto Rota a ser salvo.
+     * @return A Rota salva com o ID gerado pelo banco de dados.
+     */
+    public Rota cadastrarRota(Rota rota) {
+        // Aqui poderiam entrar regras de negócio, como validar se a rota já existe.
+        System.out.println("Cadastrando nova rota: " + rota.getNome());
         return rotaRepository.save(rota);
     }
 
-    public List<Rota> listarTodasAsRotas() {
+    /**
+     * Consulta e retorna todas as Rotas cadastradas.
+     * @return Uma lista de todas as Rotas.
+     */
+    public List<Rota> consultarTodasAsRotas() {
+        System.out.println("Consultando todas as rotas...");
         return rotaRepository.findAll();
-    }
-
-    public Rota buscarRotaPorId(Long id) {
-        // O .orElseThrow() lança uma exceção se a rota não for encontrada.
-        // É uma boa prática para lidar com casos de "não encontrado".
-        return rotaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Rota não encontrada com o id: " + id));
     }
 }
