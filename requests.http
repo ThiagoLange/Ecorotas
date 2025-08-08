@@ -1,0 +1,25 @@
+### 1. Listar todas as Rotas (Teste Principal)
+# Este é o teste mais importante agora. Ele deve retornar as 2 rotas
+# que o DataInitializer criou, junto com seus coletores.
+GET http://localhost:8085/api/rotas
+Accept: application/json
+
+### =======================================================
+
+### 2. Buscar uma Rota específica pelo ID
+# Use este teste para ver se a busca por ID está funcionando.
+GET http://localhost:8085/api/rotas/3
+Accept: application/json
+
+### =======================================================
+
+### 3. Criar uma Rota nova (Teste de POST)
+# Este teste serve para verificar se o endpoint de criação ainda funciona.
+POST http://localhost:8085/api/rotas
+Content-Type: application/json
+
+{
+  "nome": "Coleta Hospitalar - Centro",
+  "diaDaSemana": "SABADO",
+  "tipoDeResiduo": "HOSPITALAR"
+}
